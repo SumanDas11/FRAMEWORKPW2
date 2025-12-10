@@ -1,4 +1,4 @@
-import { test, expect } from '../fixtures/amazonFixtures';
+import { test } from '../../fixtures/amazonFixtures.js';
 
 test('Amazon product purchase flow', async ({ homePage, searchResultsPage, cartPage, checkoutPage }) => {
     await homePage.goto();
