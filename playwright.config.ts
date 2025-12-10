@@ -18,7 +18,7 @@ export default defineConfig({
   use: {
     baseURL: process.env.BASE_URL || 'https://www.amazon.in/',
     trace: 'on',
-    headless: false,
+    headless: true,
     screenshot: 'on',
     video: 'retain-on-failure',
   },
