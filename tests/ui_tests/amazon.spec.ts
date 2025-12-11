@@ -1,6 +1,6 @@
 import { test } from '../../fixtures/amazonFixtures.js';
 
-test('Amazon product purchase flow', async ({ homePage, searchResultsPage, cartPage, checkoutPage }) => {
+test.only('Amazon product purchase flow', async ({ homePage, searchResultsPage, cartPage, checkoutPage }) => {
     await homePage.navigate2();
     await homePage.searchProduct('ipad');
 
