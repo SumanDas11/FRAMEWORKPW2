@@ -1,8 +1,8 @@
 import { test as base } from '@playwright/test';
-import { HomePage } from '../pages/HomePage';
-import { SearchResultsPage } from '../pages/SearchResultsPage';
-import { CartPage } from '../pages/CartPage';
-import { CheckoutPage } from '../pages/CheckoutPage';
+import { HomePage } from '../pages/HomePage.js';
+import { SearchResultsPage } from '../pages/SearchResultsPage.js';
+import { CartPage } from '../pages/CartPage.js';
+import { CheckoutPage } from '../pages/CheckoutPage.js';
 
 // Extend Playwright's base test
 type AmazonFixtures = {
