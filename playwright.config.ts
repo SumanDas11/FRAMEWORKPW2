@@ -8,7 +8,8 @@ export default defineConfig({
   globalTimeout: 10 * 60 * 1000,
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 1 : 0,
+  workers: 4,
 
   // Only set workers in CI (avoids undefined assignment)
   ...(process.env.CI ? { workers: 1 } : {}),
