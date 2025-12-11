@@ -12,7 +12,7 @@ export class HomePage {
     async navigate2() {
         await this.page.goto('/');
         console.log("navigated to Amaz.");
-        await this.page.getByText('Continue shopping').click({ timeout: 5000 });
+        await this.page.locator("//button[contains(.,'Continue shopping')]").first().click({ timeout: 5000 });
         console.log("clicked continue shopping");
     }
 
