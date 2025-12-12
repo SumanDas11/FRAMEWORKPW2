@@ -11,9 +11,14 @@ export class HomePage {
 
     async navigate2() {
         await this.page.goto('/');
-        console.log("navigated to Amaz.");
-        await this.page.locator("//button[contains(.,'Continue shopping')]").first().click({ timeout: 5000 });
-        console.log("clicked continue shopping");
+        const continueShoppingButton = this.page.locator("//button[contains(.,'Continue shopping')]").first();
+        if (await continueShoppingButton.isVisible()) {
+            await continueShoppingButton.click({ timeout: 5000 });
+            console.log("Clicked continue shopping");
+        }
+        else {
+            console.log("Continue shipping button is not visible - skip");
+        }
     }
 
     async searchProduct(productName: string) {
