@@ -1,35 +1,72 @@
 name: Playwright Tests
+
 on:
   push:
-    branches: [ main, master ]
+    branches:
+      - main
   pull_request:
-    branches: [ main, master ]
+    branches:
+      - main
   schedule:
-    - cron: '45 16 * * *' # Runs every day at 00:00 UTC
+    - cron: '45 16 * * *' # Daily 10:15 PM IST (16:45 UTC)
+
 jobs:
   test:
-    timeout-minutes: 60
+    name: Run Playwright Tests
     runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install dependencies
-      run: npm ci
-    - name: Setup environment
-      run: |
-        echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
-        echo "USERNAME=${{ secrets.USERNAME }}" >> .env
-        echo "PASSWORD=${{ secrets.PASSWORD }}" >> .env
+    timeout-minutes: 60
 
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    - name: Run Playwright tests
-      run: npx playwright test
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
+    steps:
+
+      # Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Node setup
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      # Install project dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # Create environment file from GitHub secrets
+      - name: Configure environment variables
+        run: |
+          echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
+          echo "USERNAME=${{ secrets.USERNAME }}" >> .env
+          echo "PASSWORD=${{ secrets.PASSWORD }}" >> .env
+
+      # Install Playwright required browsers
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      # Run Playwright tests and generate JUnit XML
+      - name: Run Playwright tests (JUnit + HTML)
+        run: |
+          npx playwright test --reporter=junit --output=./junit-results.xml
+          npx playwright test --reporter=html
+
+      # Upload HTML report as artifact
+      - name: Upload Playwright HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-html-report
+          path: playwright-report/
+          retention-days: 30
+
+      # Upload JUnit XML report as artifact
+      - name: Upload JUnit test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-results
+          path: junit-results.xml
+          retention-days: 30
+
+      # Publish JUnit test results to GitHub Test Summary Dashboard
+      - name: Publish JUnit Test Results to GitHub Dashboard
+        uses: mikepenz/action-junit-report@v4
+        with:
+          report_paths: junit-results.xml
