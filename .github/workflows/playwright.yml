@@ -1,5 +1,9 @@
 name: Playwright Tests
 
+permissions:
+  contents: read
+  checks: write
+
 on:
   push:
     branches:
@@ -8,7 +12,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '15 6 * * *' # Daily 11:45 AM IST (06:15 UTC)
+    - cron: '30 6 * * *' # Daily 12:00 PM IST (06:30 UTC)
 
 jobs:
   test:
