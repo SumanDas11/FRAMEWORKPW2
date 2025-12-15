@@ -1,6 +1,7 @@
 
 # Playwright
 node_modules/
+/.github/workflows/playwright1.yml
 /test-results/
 /playwright-report/
 /blob-report/

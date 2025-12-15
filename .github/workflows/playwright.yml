@@ -8,7 +8,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '45 16 * * *' # Daily 10:15 PM IST (16:45 UTC)
+    - cron: '0 6 * * *' # Daily 11:30 AM IST (06:00 UTC)
 
 jobs:
   test:
@@ -46,8 +46,9 @@ jobs:
       # Run Playwright tests and generate JUnit XML
       - name: Run Playwright tests (JUnit + HTML)
         run: |
-          npx playwright test --reporter=junit --output=./junit-results.xml
-          npx playwright test --reporter=html
+          npx playwright test \
+            --reporter=junit,html \
+            --reporter-options=junit.outputFile=junit-results.xml
 
       # Upload HTML report as artifact
       - name: Upload Playwright HTML report
