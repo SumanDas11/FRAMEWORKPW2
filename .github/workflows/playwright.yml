@@ -1,4 +1,4 @@
-name: Playwright Tests
+name: CI Playwright Tests
 
 permissions:
   contents: read
@@ -12,7 +12,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '40 6 * * *' # Daily 12:00 PM IST (06:30 UTC)
+    - cron: '30 3 * * *' # Daily 9:00 AM IST (03:30 UTC)
 
 jobs:
   test:
