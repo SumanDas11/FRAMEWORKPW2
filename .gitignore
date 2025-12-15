@@ -6,5 +6,9 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+testData/
 .env
 playwright2.config.ts
+allure-results/
+allure-report/
+junit-results.xml

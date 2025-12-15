@@ -66,6 +66,20 @@ jobs:
           name: junit-results
           path: junit-results.xml
           retention-days: 7
+      
+      # Generate Allure report in CI    
+      - name: Generate Allure report
+        run: |
+          npm install -g allure-commandline
+          allure generate allure-results -o allure-report --clean
+
+      # Upload Allure results
+      - name: Upload Allure results
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results/
+          retention-days: 7
 
       # Publish JUnit test results to GitHub Test Summary Dashboard
       - name: Publish JUnit Test Results to GitHub Dashboard
