@@ -8,7 +8,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '0 6 * * *' # Daily 11:30 AM IST (06:00 UTC)
+    - cron: '15 6 * * *' # Daily 11:45 AM IST (06:15 UTC)
 
 jobs:
   test:
@@ -44,11 +44,8 @@ jobs:
         run: npx playwright install --with-deps
 
       # Run Playwright tests and generate JUnit XML
-      - name: Run Playwright tests (JUnit + HTML)
-        run: |
-          npx playwright test \
-            --reporter=junit,html \
-            --reporter-options=junit.outputFile=junit-results.xml
+      - name: Run Playwright tests
+        run: npx playwright test
 
       # Upload HTML report as artifact
       - name: Upload Playwright HTML report
@@ -56,7 +53,7 @@ jobs:
         with:
           name: playwright-html-report
           path: playwright-report/
-          retention-days: 30
+          retention-days: 7
 
       # Upload JUnit XML report as artifact
       - name: Upload JUnit test results
@@ -64,7 +61,7 @@ jobs:
         with:
           name: junit-results
           path: junit-results.xml
-          retention-days: 30
+          retention-days: 7
 
       # Publish JUnit test results to GitHub Test Summary Dashboard
       - name: Publish JUnit Test Results to GitHub Dashboard

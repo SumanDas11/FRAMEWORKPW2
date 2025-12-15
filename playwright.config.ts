@@ -14,7 +14,10 @@ export default defineConfig({
   // Only set workers in CI (avoids undefined assignment)
   ...(process.env.CI ? { workers: 1 } : {}),
 
-  reporter: 'html',
+  reporter: [
+    ['html'],
+    ['junit', { outputFile: 'junit-results.xml' }],
+  ],
 
   use: {
     baseURL: process.env.BASE_URL || 'https://www.amazon.in/',
