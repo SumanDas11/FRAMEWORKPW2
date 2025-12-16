@@ -3,9 +3,12 @@ import { expect, request, test } from '@playwright/test';
 
 test('Fetch pet details', async ({ request }) => {
     const response = await request.get('https://petstore.swagger.io/v2/pet/' + 5);
+    const respJson = await response.json();
     console.log(await response.json());
     console.log("Response status is: " + response.status());
     expect(response.status()).toBe(200);
+    expect(response.statusText()).toBe("OK");
+    expect(respJson).toHaveProperty('category.id', 0);
 });
 
 test('Add a pet', async ({ request }) => {
